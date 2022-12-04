@@ -308,6 +308,45 @@ docker rm -f server nginx
 7 - Remove images
 ```
 docker rmi lukebenson1/docker-networking-nginx:latest bobcrutchley/python-http-server:latest
+```
+
+### Duo Task Tutorial 
+This exercise gets you to containerise a basic Flask application and use NGINX as a reverse proxy.
+
+1 - Containerise the Flask application from GitLab repo
+```
+ git clone https://gitlab.com/qacdevops/duo-task.git duo_task
+```
+
+2 - Write a Dockerfile to build the image 
+```
+# Use Python 3.6 or later as a base image
+FROM python:3.6
+# Copy contents into image
+COPY . .
+# Install pip dependencies from requirements
+RUN pip install -r requirements.txt
+# Set YOUR_NAME environment variable
+ARG YOUR_NAME="Cristiana"
+# Expose the correct port
+EXPOSE 5500
+# Create an entrypoint
+ENTRYPOINT ["python", "app.py"]
+```
+```
+docker build -t app-image . 
+```
+3 - Create a network and connect the Flask app container to it
+```
+docker run -d --network app-network --name app-server app-image
+```
+
+4 - Create an NGINX container and connect it to the network
+- You will need to either bind mount the nginx.conf file to /etc/nginx/nginx.conf on the container, or create a custom NGINX image which copys the file there instead.
+
+```
+```
+
 
 
 
