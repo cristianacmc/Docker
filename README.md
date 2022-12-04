@@ -201,3 +201,119 @@ docker rm myapp
 # remove image
 docker rmi myapp_image
 ```
+
+### Dockerignore Tutorial
+
+1 - Create a new directory called ignore_exercise
+```
+mkdir ignore_exercise
+cd ignore_exercise
+```
+
+2 - Create Dockerfile
+```
+touch Dockerfile
+```
+
+3 - Place the following contents into the Dockerfile:
+```
+# build from the latest alpine image
+FROM alpine:latest
+# copy everything from the context to the container
+COPY . /context
+# display everything that has been copied to the container
+RUN ls -al /context
+```
+
+4 - Create project files
+ - Create a directory called docs and files named app.py, my-notes.md and README.md.
+ ```
+ mkdir docs 
+ cd docs
+ touch app.py my-notes.md README.md
+ ```
+ ![](/images/ignoredocs.png)
+
+5 - Create .dockerignore file
+- We do not want to copy any internal documentation, so we will use the .dockerignore file to exclude them.
+```
+touch .dockerignore
+```
+
+6 - Place the following contents into the .dockerignore file:
+```
+# ignore the docs folder
+docs
+# ignore all markdown files
+*.md
+# in this case, we can make an exception for the README
+!README.md
+```
+
+7 - Build the image
+```
+docker build -t my-image:latest .
+```
+![](/images/ignoreimage.PNG)
+
+8 - Remove the image
+```
+docker rmi my-image alpine
+```
+
+### Multi-stage build Tutorial
+
+
+### Networking Tutorial 
+This tutorial shows you how to create a bridge network and connect a containerised Python HTTP server and an NGINX container to a network.
+
+NGINX will run as a reverse proxy, redirecting traffic on port 80 to the Python container that is published to port 9000. The bridge network will allow this connection to take place.
+
+1- Create a new directory called docker_networking_tutorial and change to this directory:
+```
+mkdir docker_networking_tutorial && cd $_
+```
+
+2 - Create a New Bridge Network to allow the application and NGINX container to connect to one another
+```
+docker network create my-network
+```
+
+3 - Create an Application Container
+Run a simple Python-based HTTP server container that is based on the image bobcrutchley/python-http-server:latest. Name the container _server_ and connect it to the new network with the --network flag.
+```
+docker run -d --network my-network --name server bobcrutchley/python-http-server:latest
+```
+
+4 - Create an NGINX Container
+Create an NGINX container with custom configuration and connect it to our network
+```
+docker run -d --network my-network -p 80:80 --name nginx lukebenson1/docker-networking-nginx:latest
+```
+
+5 - Access the application:
+- using the command curl localhost
+
+![](/images/network_localhost.PNG)
+
+- navigating to your VM's external IP address via your browser
+
+![](/images/networking_IPAddress.PNG)
+
+6 - Stop the container
+```
+docker rm -f server nginx
+```
+
+7 - Remove images
+```
+docker rmi lukebenson1/docker-networking-nginx:latest bobcrutchley/python-http-server:latest
+
+
+
+
+
+
+
+
+
