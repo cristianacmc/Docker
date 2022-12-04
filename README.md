@@ -80,7 +80,52 @@ http://3.8.190.67:8080/login?from=%2F
 - Deletes the container
 
 ``` docker rm jenkins_container ```
+<hr>
 
+### Tutotial Dockerfile
+This exercise will get you to take the NGINX Docker Image and change the default index.html file that is served.
+These changes will be packed into your own Docker Image that you can run and view the changes for yourself.
 
+1 - Create a new directory dockerfile_exercises
 
+```
+mkdir dockerfile_exercises 
+cd dockerfile_exercises 
+```
 
+2 - Make a Dockerfile
+
+``` touch Dockerfile ```
+
+3 - Place the following contents within the Dockerfile:
+```
+FROM nginx:latest
+RUN printf "My custom NGINX Image\n" > /usr/share/nginx/html/index.html
+```
+
+4 - Build the image from Dockerfile and give the new image name _ournginx_
+
+```
+docker build -t ourginx .
+
+```
+
+5 - Run ournginx image on port 80:
+
+```
+docker run -d -p 80:80 --name nginx ourginx
+```
+![](/images/dockerfile.PNG)
+
+6 - Stop and remove the container
+
+```
+docker stop nginx
+docker rm nginx
+```
+
+7 - Remove the ourginx image 
+
+```
+docker rmi ourginx
+```
