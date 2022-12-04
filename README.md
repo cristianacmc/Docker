@@ -46,7 +46,7 @@
 
  <hr>
 
- ### Tutotial Containers
+ ### Containers Tutotial
 
  Setting up a Jenkins instance inside a container:
 
@@ -82,7 +82,7 @@ http://3.8.190.67:8080/login?from=%2F
 ``` docker rm jenkins_container ```
 <hr>
 
-### Tutotial Dockerfile
+### Dockerfile Tutotial
 This exercise will get you to take the NGINX Docker Image and change the default index.html file that is served.
 These changes will be packed into your own Docker Image that you can run and view the changes for yourself.
 
@@ -102,36 +102,28 @@ cd dockerfile_exercises
 FROM nginx:latest
 RUN printf "My custom NGINX Image\n" > /usr/share/nginx/html/index.html
 ```
-
 4 - Build the image from Dockerfile and give the new image name _ournginx_
-
 ```
 docker build -t ourginx .
-
 ```
-
 5 - Run ournginx image on port 80:
-
 ```
 docker run -d -p 80:80 --name nginx ourginx
 ```
 ![](/images/dockerfile.PNG)
 
 6 - Stop and remove the container
-
 ```
 docker stop nginx
 docker rm nginx
 ```
-
 7 - Remove the ourginx image 
-
 ```
 docker rmi ourginx
 ```
 <hr>
 
-### Tutorial Dockerfile Instructions
+### Dockerfile Instructions Tutorial
 
 For this tutorial, we will create an image for a simple Flask app to be ran in a container.
 
@@ -141,7 +133,6 @@ mkdir myapp
 cd myapp
 touch app.py
 ```
-
 2 - In app.py, enter the following code:
 ```
 from flask import Flask
@@ -155,12 +146,10 @@ def home():
 if __name__ == '__main__':
     app.run(port=5000, host='0.0.0.0', debug=True)
 ```
-
 3 - Create the Dockerfile to build an image
 ```
 touch Dockerfile
 ```
-
 4 - Paste the instructions in the dockerfile:
 ```
 # Python base image.
@@ -182,12 +171,10 @@ ENTRYPOINT ["python", "app.py"]
 ```
 docker build -t myapp_image .
 ```
-
 6 - Run a container from the image:
 ```
 docker run -d -p 5000:5000 --name myapp myapp_image 
 ```
-
 7 - Navigate to the app [IP_ADDRESS]:5000 to check
 
 ![](images/dockerfile_instructions.PNG)
@@ -201,20 +188,16 @@ docker rm myapp
 # remove image
 docker rmi myapp_image
 ```
-
 ### Dockerignore Tutorial
-
 1 - Create a new directory called ignore_exercise
 ```
 mkdir ignore_exercise
 cd ignore_exercise
 ```
-
 2 - Create Dockerfile
 ```
 touch Dockerfile
 ```
-
 3 - Place the following contents into the Dockerfile:
 ```
 # build from the latest alpine image
@@ -224,7 +207,6 @@ COPY . /context
 # display everything that has been copied to the container
 RUN ls -al /context
 ```
-
 4 - Create project files
  - Create a directory called docs and files named app.py, my-notes.md and README.md.
  ```
@@ -239,7 +221,6 @@ RUN ls -al /context
 ```
 touch .dockerignore
 ```
-
 6 - Place the following contents into the .dockerignore file:
 ```
 # ignore the docs folder
@@ -249,7 +230,6 @@ docs
 # in this case, we can make an exception for the README
 !README.md
 ```
-
 7 - Build the image
 ```
 docker build -t my-image:latest .
@@ -260,9 +240,7 @@ docker build -t my-image:latest .
 ```
 docker rmi my-image alpine
 ```
-
 ### Multi-stage build Tutorial
-
 
 ### Networking Tutorial 
 This tutorial shows you how to create a bridge network and connect a containerised Python HTTP server and an NGINX container to a network.
@@ -273,24 +251,20 @@ NGINX will run as a reverse proxy, redirecting traffic on port 80 to the Python 
 ```
 mkdir docker_networking_tutorial && cd $_
 ```
-
 2 - Create a New Bridge Network to allow the application and NGINX container to connect to one another
 ```
 docker network create my-network
 ```
-
 3 - Create an Application Container
 Run a simple Python-based HTTP server container that is based on the image bobcrutchley/python-http-server:latest. Name the container _server_ and connect it to the new network with the --network flag.
 ```
 docker run -d --network my-network --name server bobcrutchley/python-http-server:latest
 ```
-
 4 - Create an NGINX Container
 Create an NGINX container with custom configuration and connect it to our network
 ```
 docker run -d --network my-network -p 80:80 --name nginx lukebenson1/docker-networking-nginx:latest
 ```
-
 5 - Access the application:
 - using the command curl localhost
 
@@ -304,12 +278,10 @@ docker run -d --network my-network -p 80:80 --name nginx lukebenson1/docker-netw
 ```
 docker rm -f server nginx
 ```
-
 7 - Remove images
 ```
 docker rmi lukebenson1/docker-networking-nginx:latest bobcrutchley/python-http-server:latest
 ```
-
 ### Duo Task Tutorial 
 This exercise gets you to containerise a basic Flask application and use NGINX as a reverse proxy.
 
@@ -317,7 +289,6 @@ This exercise gets you to containerise a basic Flask application and use NGINX a
 ```
  git clone https://gitlab.com/qacdevops/duo-task.git duo_task
 ```
-
 2 - Write a Dockerfile to build the image 
 ```
 # Use Python 3.6 or later as a base image
@@ -340,10 +311,8 @@ docker build -t app-image .
 ```
 docker run -d --network app-network --name app-server app-image
 ```
-
 4 - Create an NGINX container and connect it to the network
 - You will need to either bind mount the nginx.conf file to /etc/nginx/nginx.conf on the container, or create a custom NGINX image which copys the file there instead.
-
 ```
 ```
 
