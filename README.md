@@ -63,7 +63,7 @@
 
 ``` docker exec my_jenkins cat var/jenkins_home/secrets/initialAdminPassword ```
 
-** d2a90d937877480481456b7d0f76b621 **
+**d2a90d937877480481456b7d0f76b621**
 
 - Now you have the initial admin password, copy your machine's public IP address and navigate to it in your browser on a new tab. Make sure you have allowed incoming connections on port 8080
 
