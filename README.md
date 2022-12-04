@@ -129,3 +129,75 @@ docker rm nginx
 ```
 docker rmi ourginx
 ```
+<hr>
+
+### Tutorial Dockerfile Instructions
+
+For this tutorial, we will create an image for a simple Flask app to be ran in a container.
+
+1 - create a directory called myapp with a file named app.py
+```
+mkdir myapp
+cd myapp
+touch app.py
+```
+
+2 - In app.py, enter the following code:
+```
+from flask import Flask
+app = Flask(__name__)
+
+@app.route('/home')
+@app.route('/')
+def home():
+    return "Hello world!"
+
+if __name__ == '__main__':
+    app.run(port=5000, host='0.0.0.0', debug=True)
+```
+
+3 - Create the Dockerfile to build an image
+```
+touch Dockerfile
+```
+
+4 - Paste the instructions in the dockerfile:
+```
+# Python base image.
+FROM python:3.7
+# Create and set the work directory inside the image named 'app'
+WORKDIR /app
+# Execute a pip install command using the list 'requirements.txt'
+RUN pip install Flask
+# Copy the app file into the image working directory
+COPY app.py .
+# State the listening port for the container. 
+# The app's code does not actually specify the port, so it would be useful to include here.
+EXPOSE 5000
+# Run 'python app.py' on container start-up. This is the main process.
+ENTRYPOINT ["python", "app.py"]
+```
+
+5- Build the image
+```
+docker build -t myapp_image .
+```
+
+6 - Run a container from the image:
+```
+docker run -d -p 5000:5000 --name myapp myapp_image 
+```
+
+7 - Navigate to the app [IP_ADDRESS]:5000 to check
+
+![](images/dockerfile_instructions.PNG)
+
+8 - Teardown
+```
+# stop container
+docker stop myapp
+# remove container
+docker rm myapp
+# remove image
+docker rmi myapp_image
+```
