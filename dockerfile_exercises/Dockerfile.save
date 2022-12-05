@@ -1,0 +1,3 @@
+FROM nginx:latestRUN printf "My custom NGINX Image\n" > /usr/share/nginx/html/index.html"
+
+
