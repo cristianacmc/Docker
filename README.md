@@ -309,7 +309,7 @@ docker build -t app-image .
 ```
 3 - Create a network and connect the Flask app container to it
 ```
-docker run -d --network app-network --name app-server app-image
+docker run -d --network app-network --name flask-app app-image
 ```
 4 - Create an NGINX container and connect it to the network
 - You will need to either bind mount the nginx.conf file to /etc/nginx/nginx.conf on the container, or create a custom NGINX image which copys the file there instead.
