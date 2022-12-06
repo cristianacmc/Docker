@@ -3,7 +3,9 @@
 
 # Add a database and root password
 # For hints on how to do this, consult the mysql 5.7 image documentation
+FROM mysql:5.7
 
-# Add the content of the .sql file to your image
-# All scripts copied to docker-entrypoint-initdb.d/ are automatically
-# executed during container startup
+ENV MYSQL_DATABASE=db_container
+ENV MYSQL_ROOT_PASSWORD=secret
+#All scripts copied to docker-entrypoint-initdb.d/ are automatically executed during container startup
+COPY . docker-entrypoint-initdb.d/
