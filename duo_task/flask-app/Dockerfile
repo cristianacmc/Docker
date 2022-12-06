@@ -8,7 +8,6 @@ RUN pip3 install -r requirements.txt
 ENV YOUR_NAME = "Cristiana"
 # Expose the correct port
 EXPOSE 5500
-
 # Create an entrypoint
 ENTRYPOINT ["python3", "app.py"]
 
