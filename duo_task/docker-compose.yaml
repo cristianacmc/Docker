@@ -1,0 +1,18 @@
+version: "3.8"
+services:
+  flask-app:
+    build: .app.py
+    ports:
+    - target: 5500
+      published: 5500
+      protocol: tcp
+  nginx:
+    image: nginx:latest
+    ports:
+    - target: 80
+      published: 80
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: .nginx.conf
+      target: /etc/nginx.conf
