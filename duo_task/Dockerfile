@@ -10,5 +10,5 @@ ENV YOUR_NAME = "Cristiana"
 EXPOSE 5500
 
 # Create an entrypoint
-ENTRYPOINT["python3", "app.py"]
+ENTRYPOINT ["python3", "app.py"]
 

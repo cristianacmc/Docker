@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   flask-app:
-    build: .app.py
+    build: . app.py
     ports:
     - target: 5500
       published: 5500
