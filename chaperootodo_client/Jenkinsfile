@@ -7,10 +7,12 @@ pipeline{
         stages{
             stage('Build Image'){
                 steps{
+                    dir('chaperootodo_client') {
                     script{
                         if (env.rollback == 'false'){
                             image = docker.build("cristianacmc/chaperoo-frontend")
                         }
+                    }
                     }
                 }
             }
