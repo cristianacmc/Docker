@@ -19,8 +19,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh '''docker-compose pull
-                docker-compose up -d'''
+                sh "sudo docker-compose -f ./docker-compose.yaml pull && sudo -E DB_PASSWORD=${DB_PASSWORD} docker-compose -f ./docker-compose.yaml up -d"
             }
         }
     }
