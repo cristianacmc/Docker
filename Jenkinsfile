@@ -18,9 +18,8 @@ pipeline {
                   sudo chmod +x /usr/local/bin/docker-compose"'''
             }
         }
-        stage('Deploy') 
+        stage('Deploy') {
             steps {
-                with 
                 sh '''docker-compose pull
                 docker-compose up -d'''
             }
