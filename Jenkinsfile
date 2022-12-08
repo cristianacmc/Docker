@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Clone Directory') {
             steps {
-                git branch: 'master', url: 'gitlab.com/qacdevops/chaperootodo_client.git' 
+                git branch: 'master', url: "https://gitlab.com/qacdevops/chaperootodo_client.git" 
             }
         }
         stage('Install Docker') {
